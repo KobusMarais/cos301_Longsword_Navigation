@@ -1,10 +1,13 @@
 ![UP Logo](UP_Logo.PNG)
 
-# COS301 Longsword Navigation
+# COS301 GladIOS Navigation Analysis of Longsword Navigation
 
-Implementation phase for the NavUP system, COS301, University of Pretoria.
+Analysis Phase of the system produced by Longsword Navigation Module
 
-This is the repository for the Navigation module of team Longsword. Team Longsword is building the NavUP system for the Android platform. The project for Longsword will be completed in Java. Navigation will manage the databases for: User Preferences for routes, Custom pins dropped by users, a cache of all recent routes. Navigation also provides an interface for calculating a route. If the route isn't in cache, the GIS module is called to return a calculated route. 
+
+Longsword Navigation Role:
+Navigation will manage the databases for: User Preferences for routes, Custom pins dropped by users, a cache of all recent routes. Navigation also provides an interface for calculating a route. If the route isn't in cache, the GIS module is called to return a calculated route. 
+
 
 To run the code:
 1) Make sure that you have xampp installed
@@ -39,4 +42,26 @@ To run the code:
         1) click shift + F10 or 
         2) click on the run menu option and click on Run 'Main'
 8) An output terminal should appear at the bottom containing the results of running the program
-    1) The Main used to test this code is simple as the functionality necessary for the Integration teams use was only tested 
+    1) The Main used to test this code is simple as the functionality necessary for the Integration teams use was only tested
+    
+    
+
+### Jacobus Marais
+* u15188397
+
+### Mia Gerber
+*  u15016502
+
+### Victor Twigge
+* u10376802
+
+### Nicaedin Suklal
+* u15207812
+
+### Darren Adams
+* u14256232
+
+
+### Nkosinathi Mothoa
+* u
+
