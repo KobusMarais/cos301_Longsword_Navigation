@@ -2,10 +2,10 @@
 
 # COS301 GladIOS Navigation Analysis of Longsword Navigation
 
-Analysis Phase of the system produced by Longsword Navigation Module
+## Analysis Phase of the system produced by Longsword Navigation Module
 
 
-Longsword Navigation Role:
+#### Longsword Navigation Role:
 Navigation will manage the databases for: User Preferences for routes, Custom pins dropped by users, a cache of all recent routes. Navigation also provides an interface for calculating a route. If the route isn't in cache, the GIS module is called to return a calculated route. 
 
 
