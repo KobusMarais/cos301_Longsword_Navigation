@@ -1,12 +1,15 @@
 package NavUP.Interfaces;
 
 import NavUP.Interfaces.NavigationModule.Navigation;
+import org.junit.Test;
+import com.google.gson.*;
+
+import static org.junit.Assert.*;
 
 /**
- * Created by victor on 2017/05/01.
+ * Created by victor on 2017/05/03.
  */
-class NavigationInterfaceTest {
-
+public class NavigationInterfaceTest {
     //Navigation object instance
     Navigation navModule = new Navigation();
 
@@ -43,21 +46,21 @@ class NavigationInterfaceTest {
     //
     //getRoute() sample output:
     //We expect a JSON string with a single rout as an array of locations to be returned..of the form:
-    //{
-    //    length: double,
-    //    waypoints:
-    //    [
-    //        {
-    //            lat: double,
-    //            long: double
-    //        }
-    //        ,...
-    //    ]
-    //}
+    //    {
+    //        length: double,
+    //        waypoints:
+    //        [
+    //            {
+    //                lat: double,
+    //                long: double
+    //            }
+    //            ,...
+    //        ]
+    //    }
     //
 
-    @org.junit.jupiter.api.Test
-    void getRoute() {
+    @Test
+    public void getRouteIndoorToIndoor() {
 
         // From HB to CSE (indoor to indoor)
         String pointLocations1 =
@@ -84,8 +87,32 @@ class NavigationInterfaceTest {
                         +
                         "}";
 
-        //navModule.getRoute(pointLocations1);
-        //System.out.println(navModule.getRoute(pointLocations1));
+        // Parse JSON String returned by getRoute()
+        String jsonString = navModule.getRoute(pointLocations1);
+        JsonElement jelement = new JsonParser().parse(jsonString);
+        JsonObject  jobject = jelement.getAsJsonObject();
+
+        // Test if distance is > 0
+        double distance = Double.parseDouble(jobject.get("length").toString());
+        assertTrue(distance > 0);
+
+        // Test if first waypoint matches starting location
+        JsonArray jarray = jobject.getAsJsonArray("waypoints");
+        jobject = jarray.get(0).getAsJsonObject();
+        double latStart = Double.parseDouble(jobject.get("lat").toString());
+        double lonStart = Double.parseDouble(jobject.get("lat").toString());
+        assertTrue(latStart == -25.7552969 && lonStart == 28.2308200);
+
+        // Test if last waypoint matches destination location
+        int arrayLength = jarray.size()-1;
+        jobject = jarray.get(arrayLength).getAsJsonObject();
+        double latDest = Double.parseDouble(jobject.get("lat").toString());
+        double lonDest = Double.parseDouble(jobject.get("lat").toString());
+        assertTrue(latDest == -25.7554499 && lonDest == 28.2312627);
+    }
+
+    @Test
+    public void getRouteOutdoorToOutdoor() {
 
         // From outside of HB to outside of Theology building (outdoor to outdoor)
         String pointLocations2 =
@@ -111,6 +138,34 @@ class NavigationInterfaceTest {
                         + " }"
                         +
                         "}";
+
+        // Parse JSON String returned by getRoute()
+        String jsonString = navModule.getRoute(pointLocations2);
+        JsonElement jelement = new JsonParser().parse(jsonString);
+        JsonObject  jobject = jelement.getAsJsonObject();
+
+        // Test if distance is > 0
+        double distance = Double.parseDouble(jobject.get("length").toString());
+        assertTrue(distance > 0);
+
+        // Test if first waypoint matches starting location
+        JsonArray jarray = jobject.getAsJsonArray("waypoints");
+        jobject = jarray.get(0).getAsJsonObject();
+        double latStart = Double.parseDouble(jobject.get("lat").toString());
+        double lonStart = Double.parseDouble(jobject.get("lat").toString());
+        assertTrue(latStart == -25.754885 && lonStart == 28.231372);
+
+        // Test if last waypoint matches destination location
+        int arrayLength = jarray.size()-1;
+        jobject = jarray.get(arrayLength).getAsJsonObject();
+        double latDest = Double.parseDouble(jobject.get("lat").toString());
+        double lonDest = Double.parseDouble(jobject.get("lat").toString());
+        assertTrue(latDest == -25.754943 && lonDest == 28.229339);
+    }
+
+    @Test
+    public void getRouteIndoorToOutdoor() {
+
         // From IT Building to outside of HB (indoor to outdoor)
         String pointLocations3 =
                 "{"
@@ -136,6 +191,32 @@ class NavigationInterfaceTest {
                         +
                         "}";
 
+        // Parse JSON String returned by getRoute()
+        String jsonString = navModule.getRoute(pointLocations3);
+        JsonElement jelement = new JsonParser().parse(jsonString);
+        JsonObject  jobject = jelement.getAsJsonObject();
+
+        // Test if distance is > 0
+        double distance = Double.parseDouble(jobject.get("length").toString());
+        assertTrue(distance > 0);
+
+        // Test if first waypoint matches starting location
+        JsonArray jarray = jobject.getAsJsonArray("waypoints");
+        jobject = jarray.get(0).getAsJsonObject();
+        double latStart = Double.parseDouble(jobject.get("lat").toString());
+        double lonStart = Double.parseDouble(jobject.get("lat").toString());
+        assertTrue(latStart == -25.755619 && lonStart == 28.232563);
+
+        // Test if last waypoint matches destination location
+        int arrayLength = jarray.size()-1;
+        jobject = jarray.get(arrayLength).getAsJsonObject();
+        double latDest = Double.parseDouble(jobject.get("lat").toString());
+        double lonDest = Double.parseDouble(jobject.get("lat").toString());
+        assertTrue(latDest == -25.755160 && lonDest == 28.231310);
+    }
+
+    @Test
+    public void getRouteOutdoorToIndoor() {
         // From outside of Centenary to Merensky Library (outdoor to indoor)
         String pointLocations4 =
                 "{"
@@ -161,17 +242,32 @@ class NavigationInterfaceTest {
                         +
                         "}";
 
+        // Parse JSON String returned by getRoute()
+        String jsonString = navModule.getRoute(pointLocations4);
+        JsonElement jelement = new JsonParser().parse(jsonString);
+        JsonObject  jobject = jelement.getAsJsonObject();
 
+        // Test if distance is > 0
+        double distance = Double.parseDouble(jobject.get("length").toString());
+        assertTrue(distance > 0);
 
-        //Add a route to the cache
-        //System.out.println(navModule.getRoute(pointLocations1));
+        // Test if first waypoint matches starting location
+        JsonArray jarray = jobject.getAsJsonArray("waypoints");
+        jobject = jarray.get(0).getAsJsonObject();
+        double latStart = Double.parseDouble(jobject.get("lat").toString());
+        double lonStart = Double.parseDouble(jobject.get("lat").toString());
+        assertTrue(latStart == -25.754112 && lonStart == 28.232930);
 
-        //assertNotNull(navModule.getRoute(pointLocations1));
+        // Test if last waypoint matches destination location
+        int arrayLength = jarray.size()-1;
+        jobject = jarray.get(arrayLength).getAsJsonObject();
+        double latDest = Double.parseDouble(jobject.get("lat").toString());
+        double lonDest = Double.parseDouble(jobject.get("lat").toString());
+        assertTrue(latDest == -25.755169 && lonDest == 28.230470);
     }
 
-    @org.junit.jupiter.api.Test
-    void dropPin() {
-        //Strings to test pin functionality
+    @Test
+    public void dropPin() {
 
         // Drop pin on IT Building
         String pin1 =
@@ -203,7 +299,7 @@ class NavigationInterfaceTest {
 
         navModule.dropPin(pin2);
 
-        // Drop pin that's already added (similar to pin1)
+        // Drop pin that's already added (pin1)
         navModule.dropPin(pin1);
 
         // Drop out of bounds pin (Brooklyn Mall)
@@ -222,8 +318,9 @@ class NavigationInterfaceTest {
         navModule.dropPin(pin3);
     }
 
-    @org.junit.jupiter.api.Test
-    void removePin() {
+
+    @Test
+    public void removePin() {
 
         // Drop and remove pin on IT Building (indoor)
         String pin4 =
@@ -273,5 +370,5 @@ class NavigationInterfaceTest {
         navModule.removePin(pin3);
 
     }
-}
 
+}
